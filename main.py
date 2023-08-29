@@ -4,7 +4,6 @@ import pandas
 data = pandas.read_csv("50_states.csv")
 all_states = data.state.to_list()
 correct_answers = []
-missing_states = []
 screen = turtle.Screen()
 screen.title("U.S. States Game")
 image = "blank_states_img.gif"
@@ -16,9 +15,7 @@ while len(correct_answers) < 50:
                                     prompt="What's another state's name?").title()
 
     if answer_state == "Exit":
-        for state in all_states:
-            if state not in correct_answers:
-                missing_states.append(state)
+        missing_states = [state for state in all_states if state not in correct_answers]
         new_data = pandas.DataFrame(missing_states)
         new_data.to_csv("States_To_Learn.csv")
         break
@@ -33,5 +30,3 @@ while len(correct_answers) < 50:
             name_in_map.penup()
             name_in_map.goto(x, y)
             name_in_map.write(answer_state)
-
-
